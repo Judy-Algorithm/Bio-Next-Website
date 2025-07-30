@@ -1,0 +1,9 @@
+{
+  "name": "Bio-Next AI Assistant",
+  "short_name": "Bio-Next",
+  "description": "Bio-Next 是一个将你的想法变为行动的通用 AI 助手",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6"
+} 
