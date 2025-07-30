@@ -95,7 +95,7 @@ export default function Sidebar() {
         className={`fixed md:relative z-50 h-full bg-white border-r border-gray-200 flex flex-col transition-all duration-300 ${
           isCollapsed 
             ? 'w-64 translate-x-0' 
-            : 'w-0 md:w-64 -translate-x-full md:translate-x-0'
+            : 'w-0 md:w-64 -translate-x-full md:translate-x-0 opacity-0 md:opacity-100'
         }`}
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}

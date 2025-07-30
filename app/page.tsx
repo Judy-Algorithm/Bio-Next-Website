@@ -29,7 +29,7 @@ export default function Home() {
       <Sidebar />
       
       {/* 主内容区域 */}
-      <div className="flex-1 flex flex-col h-full">
+      <div className="flex-1 flex flex-col h-full w-full">
         {/* 头部 */}
         <Header />
         
