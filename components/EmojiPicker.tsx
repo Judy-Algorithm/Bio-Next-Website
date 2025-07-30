@@ -94,7 +94,6 @@ const EmojiPickerComponent: React.FC<EmojiPickerProps> = ({
             skinTonesDisabled={true}
             searchDisabled={false}
             lazyLoadEmojis={true}
-            emojiStyle="native"
           />
         </div>
       )}
