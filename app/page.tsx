@@ -24,7 +24,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="flex h-screen md:h-screen bg-[var(--background-gray-main)]">
+    <div className="flex h-[100dvh] bg-[var(--background-gray-main)]">
       {/* 侧边栏 */}
       <Sidebar />
       

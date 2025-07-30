@@ -133,7 +133,7 @@ export default function ChatInterface({ sessionId }: ChatInterfaceProps) {
   return (
     <div className="flex-1 flex flex-col bg-white h-full">
       {/* Messages list */}
-      <div className="flex-1 overflow-y-auto p-3 md:p-6 space-y-6 min-h-0">
+      <div className="flex-1 overflow-y-auto p-3 md:p-6 space-y-6 min-h-0 pb-4">
         <AnimatePresence>
           {messages.map((message, index) => (
             <motion.div
@@ -243,7 +243,7 @@ export default function ChatInterface({ sessionId }: ChatInterfaceProps) {
       )}
 
       {/* Input area - fixed at bottom on mobile */}
-      <div className="border-t border-gray-200 px-3 md:px-6 py-3 md:py-4 pb-3 md:pb-8 bg-white">
+      <div className="border-t border-gray-200 px-3 md:px-6 py-3 md:py-4 bg-white flex-shrink-0">
         <div className="flex items-center space-x-2 md:space-x-3">
           {/* File upload button */}
           <div className="relative">
