@@ -68,10 +68,10 @@ export default function ProjectList({
 
   if (projects.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-8 text-gray-500">
-        <FolderOpen className="w-12 h-12 mb-4 text-gray-300" />
+      <div className="flex flex-col items-center justify-center py-8 text-white">
+        <FolderOpen className="w-12 h-12 mb-4 text-white" />
         <p className="text-sm">No projects yet</p>
-        <p className="text-xs text-gray-400 mt-1">Click + to create a new project</p>
+        <p className="text-xs text-gray-300 mt-1">Click + to create a new project</p>
       </div>
     )
   }
@@ -88,14 +88,14 @@ export default function ProjectList({
             animate={{ opacity: 1, x: 0 }}
             className={`group px-3 py-2 rounded-lg cursor-pointer transition-colors ${
               activeProjectId === project.id
-                ? 'bg-purple-100 text-purple-800'
-                : 'hover:bg-gray-100 text-gray-700'
+                ? 'bg-purple-600 text-white'
+                : 'hover:bg-purple-800 text-white'
             }`}
             onClick={() => !isRenaming && onSelectProject(project.id)}
           >
             <div className="flex items-center space-x-3">
               <FolderOpen className={`w-4 h-4 flex-shrink-0 ${
-                activeProjectId === project.id ? 'text-purple-600' : 'text-gray-500'
+                activeProjectId === project.id ? 'text-white' : 'text-gray-300'
               }`} />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
@@ -114,33 +114,33 @@ export default function ProjectList({
                           }
                         }}
                         onBlur={handleRenameSubmit}
-                        className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        className="flex-1 px-2 py-1 text-sm border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-[#2d1b4e] text-white"
                       />
-                      <button
-                        onClick={handleRenameCancel}
-                        className="p-1 hover:bg-gray-200 rounded transition-colors"
-                        title="Cancel rename"
-                      >
-                        <X className="w-3 h-3 text-gray-500" />
-                      </button>
+                                              <button
+                          onClick={handleRenameCancel}
+                          className="p-1 hover:bg-purple-800 rounded transition-colors"
+                          title="Cancel rename"
+                        >
+                          <X className="w-3 h-3 text-white" />
+                        </button>
                     </div>
                   ) : (
                     <h3 className="text-sm font-medium truncate">{project.name}</h3>
                   )}
-                  <span className="text-xs text-gray-400 flex items-center space-x-1">
+                  <span className="text-xs text-gray-300 flex items-center space-x-1">
                     <Clock className="w-3 h-3" />
                     <span>{formatDate(project.createdAt)}</span>
                   </span>
                 </div>
                 {project.lastMessage && (
-                  <p className="text-xs text-gray-500 truncate mt-1">
+                  <p className="text-xs text-gray-300 truncate mt-1">
                     {project.lastMessage}
                   </p>
                 )}
                 <div className="flex items-center justify-between mt-1">
                   <div className="flex items-center space-x-2">
-                    <MessageSquare className="w-3 h-3 text-gray-400" />
-                    <span className="text-xs text-gray-400">{project.messageCount} messages</span>
+                    <MessageSquare className="w-3 h-3 text-gray-300" />
+                    <span className="text-xs text-gray-300">{project.messageCount} messages</span>
                   </div>
                   {!isRenaming && (
                     <ProjectMenu

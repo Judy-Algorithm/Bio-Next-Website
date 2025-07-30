@@ -3,20 +3,20 @@
 @tailwind utilities;
 
 :root {
-  /* 深色宇宙主题 - 与CureNova风格一致 */
-  --background-white-main: #0a0a0f;
-  --background-gray-main: #1a1a2e;
-  --background-card: #16213e;
-  --background-input: #0f3460;
+  /* 深色宇宙主题 - 黑色背景，深紫色聊天界面 */
+  --background-white-main: #000000;
+  --background-gray-main: #000000;
+  --background-card: #1a0b2e;
+  --background-input: #2d1b4e;
   
-  /* 文字颜色 */
+  /* 文字颜色 - 全部改为白色 */
   --text-primary: #ffffff;
-  --text-secondary: #a8b2d1;
-  --text-muted: #64748b;
+  --text-secondary: #ffffff;
+  --text-muted: #ffffff;
   
   /* 边框和分割线 */
-  --border-color: #334155;
-  --border-light: #475569;
+  --border-color: #4a4a4a;
+  --border-light: #6a6a6a;
   
   /* 主题色彩 - 紫色渐变 */
   --primary-color: #8b5cf6;
@@ -30,7 +30,7 @@
   
   /* 渐变色彩 */
   --gradient-primary: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
-  --gradient-secondary: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  --gradient-secondary: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 100%);
 }
 
 * {
@@ -128,14 +128,14 @@ a {
 @media (prefers-color-scheme: dark) {
   :root {
     /* 深色模式使用相同的深色主题 */
-    --background-white-main: #0a0a0f;
-    --background-gray-main: #1a1a2e;
-    --background-card: #16213e;
-    --background-input: #0f3460;
+    --background-white-main: #000000;
+    --background-gray-main: #000000;
+    --background-card: #1a0b2e;
+    --background-input: #2d1b4e;
     --text-primary: #ffffff;
-    --text-secondary: #a8b2d1;
-    --text-muted: #64748b;
-    --border-color: #334155;
-    --border-light: #475569;
+    --text-secondary: #ffffff;
+    --text-muted: #ffffff;
+    --border-color: #4a4a4a;
+    --border-light: #6a6a6a;
   }
 } 

@@ -25,7 +25,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="flex h-[100dvh] bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url(/bg.png)' }}>
+    <div className="flex h-[100dvh] bg-black">
       {/* 侧边栏 */}
       <Sidebar />
       

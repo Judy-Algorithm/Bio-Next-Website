@@ -37,12 +37,12 @@ export default function UserProfile() {
             <User className="w-4 h-4 text-white" />
           )}
         </div>
-        <span className="text-sm font-medium text-gray-700">{user.name}</span>
+        <span className="text-sm font-medium text-white">{user.name}</span>
         <motion.div
           animate={{ rotate: isDropdownOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
         >
-          <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
         </motion.div>
@@ -56,10 +56,10 @@ export default function UserProfile() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="absolute right-0 top-full mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50"
+            className="absolute right-0 top-full mt-2 w-80 bg-[#1a0b2e] rounded-lg shadow-lg border border-gray-600 z-50"
           >
             {/* User info card */}
-            <div className="p-4 border-b border-gray-200">
+            <div className="p-4 border-b border-gray-600">
               <div className="flex items-center space-x-3">
                 <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center">
                   {user.avatar ? (
@@ -73,12 +73,12 @@ export default function UserProfile() {
                   )}
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-gray-900">{user.name}</h3>
-                  <p className="text-sm text-gray-500">{user.email}</p>
+                  <h3 className="font-semibold text-white">{user.name}</h3>
+                  <p className="text-sm text-gray-300">{user.email}</p>
                   {user.role === 'admin' && (
                     <div className="flex items-center mt-1">
-                      <Crown className="w-3 h-3 text-yellow-500 mr-1" />
-                      <span className="text-xs text-yellow-600">Admin</span>
+                      <Crown className="w-3 h-3 text-yellow-400 mr-1" />
+                      <span className="text-xs text-yellow-400">Admin</span>
                     </div>
                   )}
                 </div>
@@ -88,10 +88,10 @@ export default function UserProfile() {
             {/* User details */}
             <div className="p-4 space-y-3">
               <div className="flex items-center space-x-3 text-sm">
-                <Mail className="w-4 h-4 text-gray-400" />
-                <span className="text-gray-600">{user.email}</span>
+                <Mail className="w-4 h-4 text-gray-300" />
+                <span className="text-white">{user.email}</span>
                 {user.isEmailVerified && (
-                  <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">
+                  <span className="px-2 py-1 bg-green-800 text-green-200 text-xs rounded-full">
                     Verified
                   </span>
                 )}
@@ -99,8 +99,8 @@ export default function UserProfile() {
               
               {user.lastLogin && (
                 <div className="flex items-center space-x-3 text-sm">
-                  <Calendar className="w-4 h-4 text-gray-400" />
-                  <span className="text-gray-600">
+                  <Calendar className="w-4 h-4 text-gray-300" />
+                  <span className="text-white">
                     Last login: {formatRelativeTime(new Date(user.lastLogin))}
                   </span>
                 </div>
@@ -108,8 +108,8 @@ export default function UserProfile() {
 
               {user.createdAt && (
                 <div className="flex items-center space-x-3 text-sm">
-                  <Calendar className="w-4 h-4 text-gray-400" />
-                  <span className="text-gray-600">
+                  <Calendar className="w-4 h-4 text-gray-300" />
+                  <span className="text-white">
                     Registered: {formatRelativeTime(new Date(user.createdAt))}
                   </span>
                 </div>
@@ -117,14 +117,14 @@ export default function UserProfile() {
             </div>
 
             {/* Action buttons */}
-            <div className="p-4 border-t border-gray-200 space-y-2">
-              <button className="w-full flex items-center space-x-3 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="p-4 border-t border-gray-600 space-y-2">
+              <button className="w-full flex items-center space-x-3 px-3 py-2 text-sm text-white hover:bg-purple-800 rounded-lg transition-colors">
                 <Settings className="w-4 h-4" />
                 <span>Settings</span>
               </button>
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center space-x-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                className="w-full flex items-center space-x-3 px-3 py-2 text-sm text-red-400 hover:bg-red-900 rounded-lg transition-colors"
               >
                 <LogOut className="w-4 h-4" />
                 <span>Logout</span>

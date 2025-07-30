@@ -55,17 +55,17 @@ export default function MessageItem({ message }: MessageItemProps) {
             </div>
             
             {/* Name */}
-            <span className="text-sm font-medium text-gray-700">Bio-Next AI Assistant</span>
+            <span className="text-sm font-medium text-white">Bio-Next AI Assistant</span>
           </div>
           
           {/* Message Content */}
           <div className="ml-11">
-            <div className="whitespace-pre-wrap break-words leading-relaxed text-gray-800">
+            <div className="whitespace-pre-wrap break-words leading-relaxed text-white">
               {message.content}
             </div>
             
             {/* Timestamp */}
-            <div className="mt-2 text-xs text-gray-400">
+            <div className="mt-2 text-xs text-white">
               {formatTime(message.timestamp)}
             </div>
           </div>
@@ -86,7 +86,7 @@ export default function MessageItem({ message }: MessageItemProps) {
         {/* Avatar and Name Row - 右侧对齐 */}
         <div className="flex items-center justify-end space-x-3 mb-3">
           {/* Name */}
-          <span className="text-sm font-medium text-gray-700">{user?.name || 'You'}</span>
+          <span className="text-sm font-medium text-white">{user?.name || 'You'}</span>
           
           {/* Avatar */}
           <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center overflow-hidden">
@@ -107,14 +107,14 @@ export default function MessageItem({ message }: MessageItemProps) {
         {/* Message Content - 右侧对齐 */}
         <div className="flex justify-end">
           <div className="max-w-2xl">
-            <div className="px-4 py-3 rounded-2xl bg-purple-100 border border-purple-200 shadow-sm">
+            <div className="px-4 py-3 rounded-2xl bg-white border border-gray-300 shadow-sm">
               <div className="whitespace-pre-wrap break-words leading-relaxed text-gray-800">
                 {message.content}
               </div>
             </div>
             
             {/* Timestamp */}
-            <div className="mt-2 text-xs text-gray-400 text-right">
+            <div className="mt-2 text-xs text-white text-right">
               {formatTime(message.timestamp)}
             </div>
           </div>

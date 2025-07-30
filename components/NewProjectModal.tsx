@@ -30,16 +30,16 @@ export default function NewProjectModal({ isOpen, onClose, onCreateProject }: Ne
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="bg-white rounded-lg shadow-xl w-96 max-w-md mx-4"
+            className="bg-[#1a0b2e] rounded-lg shadow-xl w-96 max-w-md mx-4 border border-gray-600"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-800">Project Name</h2>
+            <div className="flex items-center justify-between p-6 border-b border-gray-600">
+              <h2 className="text-xl font-semibold text-white">Project Name</h2>
               <button
                 onClick={onClose}
-                className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+                className="p-1 hover:bg-purple-800 rounded-full transition-colors"
               >
-                <X className="w-5 h-5 text-gray-500" />
+                <X className="w-5 h-5 text-white" />
               </button>
             </div>
 
@@ -52,18 +52,18 @@ export default function NewProjectModal({ isOpen, onClose, onCreateProject }: Ne
                     value={projectName}
                     onChange={(e) => setProjectName(e.target.value)}
                     placeholder="e.g., Birthday Party Plan"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-[#2d1b4e] text-white placeholder-gray-300"
                     autoFocus
                   />
                 </div>
 
                 {/* Help section */}
-                <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+                <div className="mb-6 p-4 bg-[#2d1b4e] rounded-lg">
                   <div className="flex items-start space-x-3">
-                    <Lightbulb className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                    <Lightbulb className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                     <div>
-                      <h3 className="font-medium text-gray-800 mb-2">What is this project?</h3>
-                      <p className="text-sm text-gray-600">
+                      <h3 className="font-medium text-white mb-2">What is this project?</h3>
+                      <p className="text-sm text-gray-300">
                         This project links user-uploaded files and Bio-Next agent–generated result files under a single Project ID, allowing all related content to be centrally saved, organized, and automatically displayed in the file panel for easier access and ongoing work management.
                       </p>
                     </div>
@@ -75,7 +75,7 @@ export default function NewProjectModal({ isOpen, onClose, onCreateProject }: Ne
                   <button
                     type="button"
                     onClick={onClose}
-                    className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                    className="px-4 py-2 border border-gray-600 rounded-lg text-white hover:bg-purple-800 transition-colors"
                   >
                     Cancel
                   </button>
@@ -84,8 +84,8 @@ export default function NewProjectModal({ isOpen, onClose, onCreateProject }: Ne
                     disabled={!projectName.trim()}
                     className={`px-4 py-2 rounded-lg transition-colors ${
                       projectName.trim()
-                        ? 'bg-purple-500 hover:bg-purple-600 text-white'
-                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                        ? 'bg-purple-600 hover:bg-purple-700 text-white'
+                        : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                     }`}
                   >
                     Create Project
