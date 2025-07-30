@@ -27,7 +27,7 @@ export default function Header({ onToggleSidebar }: HeaderProps = {}) {
 
   return (
     <motion.header 
-      className="h-16 bg-[var(--background-card)] border-b border-[var(--border-color)] flex items-center justify-between px-4 md:px-6 min-h-[64px]"
+      className="h-16 bg-transparent border-b border-white/20 flex items-center justify-between px-4 md:px-6 min-h-[64px] text-white"
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.3 }}

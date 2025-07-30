@@ -92,7 +92,7 @@ export default function Sidebar() {
 
       {/* Sidebar */}
       <motion.div 
-        className={`fixed md:relative z-50 h-full bg-[var(--background-card)] border-r border-[var(--border-color)] flex flex-col transition-all duration-300 ${
+        className={`fixed md:relative z-50 h-full bg-transparent border-r border-white/20 flex flex-col transition-all duration-300 text-white ${
           isCollapsed 
             ? 'hidden md:block w-0 md:w-64 -translate-x-full md:translate-x-0 opacity-0 md:opacity-100' 
             : 'w-64 translate-x-0'
@@ -102,7 +102,7 @@ export default function Sidebar() {
         transition={{ duration: 0.3 }}
       >
         {/* Header */}
-        <div className="h-16 bg-[var(--background-card)] border-b border-[var(--border-color)] flex items-center justify-between px-4 md:px-6 min-h-[64px]">
+        <div className="h-16 bg-transparent border-b border-white/20 flex items-center justify-between px-4 md:px-6 min-h-[64px]">
           <div className="flex items-center space-x-3">
             {/* Logo */}
             <div className="w-8 h-8 relative flex-shrink-0">
@@ -138,11 +138,11 @@ export default function Sidebar() {
         {/* Search - hidden on mobile */}
         <div className="hidden md:block px-4 md:px-6 py-4">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 w-4 h-4" />
             <input
               type="text"
               placeholder="Search projects..."
-              className="w-full pl-10 pr-4 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 text-sm border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white/10 text-white placeholder-white/60"
             />
           </div>
         </div>
