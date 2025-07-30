@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { 
-  Settings,
-  Menu,
   Plus
 } from 'lucide-react'
 import { useAuthStore } from '@/store/auth'
@@ -48,11 +46,6 @@ export default function Header() {
 
       {/* Right side - User actions */}
       <div className="flex items-center space-x-2 md:space-x-4">
-        {/* Settings button */}
-        <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors">
-          <Settings className="w-4 h-4 md:w-5 md:h-5 text-gray-600" />
-        </button>
-
         {/* User profile - show on all devices */}
         {isAuthenticated && user && (
           <div className="block">
