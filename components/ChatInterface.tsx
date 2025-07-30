@@ -273,7 +273,7 @@ export default function ChatInterface({ sessionId }: ChatInterfaceProps) {
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
               placeholder="Type your message..."
-              className="w-full resize-none border border-gray-600 rounded-lg px-3 md:px-4 py-2 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-[#282342] text-white placeholder-gray-400"
+              className="w-full resize-none border border-gray-600 rounded-lg px-3 md:px-4 py-2 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent bg-[#282342] text-white placeholder-gray-400"
               style={{ minHeight: '40px', maxHeight: '100px' }}
               disabled={isTyping}
             />
