@@ -47,8 +47,6 @@ export default function ProjectMenu({
   const handleRename = () => {
     if (onRenameStart) {
       onRenameStart()
-    } else {
-      setIsRenaming(true)
     }
     setIsOpen(false)
     setTimeout(() => {
