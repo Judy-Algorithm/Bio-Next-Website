@@ -94,7 +94,7 @@ export default function Sidebar() {
       <motion.div 
         className={`fixed md:relative z-50 h-full bg-white border-r border-gray-200 flex flex-col transition-all duration-300 ${
           isCollapsed 
-            ? 'w-0 md:w-64 -translate-x-full md:translate-x-0 opacity-0 md:opacity-100' 
+            ? 'hidden md:block w-0 md:w-64 -translate-x-full md:translate-x-0 opacity-0 md:opacity-100' 
             : 'w-64 translate-x-0'
         }`}
         initial={{ x: -100, opacity: 0 }}
@@ -164,7 +164,7 @@ export default function Sidebar() {
       {/* Mobile toggle button */}
       <button
         onClick={() => setIsCollapsed(false)}
-        className="fixed top-20 left-4 z-30 md:hidden p-3 bg-white border border-gray-200 rounded-lg shadow-lg hover:bg-gray-50 transition-colors"
+        className="fixed bottom-4 left-4 z-30 md:hidden p-3 bg-white border border-gray-200 rounded-lg shadow-lg hover:bg-gray-50 transition-colors"
       >
         <ChevronRight className="w-5 h-5 text-gray-600" />
       </button>
