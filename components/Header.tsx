@@ -35,7 +35,7 @@ export default function Header({ onToggleSidebar }: HeaderProps = {}) {
       {/* Left side - Session info */}
       <div className="flex items-center space-x-2 md:space-x-4">
         <div className="flex items-center space-x-2">
-          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          <div className="w-2 h-2 bg-pink-500 rounded-full animate-pulse"></div>
           <span className="text-xs md:text-sm text-white">
             <span className="hidden md:inline">Project ID: </span>
             {isClient && currentProjectId ? currentProjectId : '...'}

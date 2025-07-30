@@ -131,7 +131,7 @@ export default function ChatInterface({ sessionId }: ChatInterfaceProps) {
   }
 
   return (
-    <div className="flex-1 flex flex-col bg-black h-full text-white">
+    <div className="flex-1 flex flex-col bg-[#282342] h-full text-white">
       {/* Messages list */}
       <div className="flex-1 overflow-y-auto p-3 md:p-6 space-y-6 min-h-0 pb-20 md:pb-4">
         <AnimatePresence>

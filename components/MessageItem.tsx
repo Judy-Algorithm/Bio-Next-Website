@@ -60,7 +60,7 @@ export default function MessageItem({ message }: MessageItemProps) {
           
           {/* Message Content */}
           <div className="ml-11">
-            <div className="whitespace-pre-wrap break-words leading-relaxed text-white bg-[#282342] px-4 py-3 rounded-lg">
+            <div className="whitespace-pre-wrap break-words leading-relaxed text-white">
               {message.content}
             </div>
             
