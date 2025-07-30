@@ -116,7 +116,7 @@ export default function Sidebar() {
                 quality={100}
               />
             </div>
-            <h1 className="text-lg md:text-xl font-bold text-gray-800">Bio-Next</h1>
+            <h1 className="hidden md:block text-lg md:text-xl font-bold text-gray-800">Bio-Next</h1>
           </div>
           <div className="flex items-center space-x-2">
             <button
@@ -135,8 +135,8 @@ export default function Sidebar() {
           </div>
         </div>
 
-        {/* Search */}
-        <div className="px-4 md:px-6 py-4">
+        {/* Search - hidden on mobile */}
+        <div className="hidden md:block px-4 md:px-6 py-4">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <input

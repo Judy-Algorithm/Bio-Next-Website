@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { MessageSquare, Send, Settings, User, Bot, FileText, Image, Video, Music } from 'lucide-react'
+import { MessageSquare, Send, User, Bot, FileText, Image, Video, Music } from 'lucide-react'
 import ChatInterface from '@/components/ChatInterface'
 import Sidebar from '@/components/Sidebar'
 import Header from '@/components/Header'
@@ -24,7 +24,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="flex h-screen bg-[var(--background-gray-main)]">
+    <div className="flex h-screen md:h-screen bg-[var(--background-gray-main)]">
       {/* 侧边栏 */}
       <Sidebar />
       
