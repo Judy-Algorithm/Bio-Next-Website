@@ -164,7 +164,7 @@ export default function Sidebar() {
       {/* Mobile toggle button */}
       <button
         onClick={() => setIsCollapsed(false)}
-        className="fixed bottom-20 left-4 z-30 md:hidden p-3 bg-white border border-gray-200 rounded-lg shadow-lg hover:bg-gray-50 transition-colors"
+        className="fixed bottom-20 left-0 z-30 md:hidden p-3 bg-white border-r border-t border-gray-200 rounded-tr-lg shadow-lg hover:bg-gray-50 transition-colors"
       >
         <ChevronRight className="w-5 h-5 text-gray-600" />
       </button>
