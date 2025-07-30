@@ -7,8 +7,6 @@ import {
   Search, 
   MessageSquare, 
   Plus, 
-  LogIn, 
-  User,
   X,
   ChevronLeft,
   ChevronRight
@@ -36,13 +34,7 @@ export default function Sidebar() {
   const { user, isAuthenticated, logout } = useAuthStore()
   const { generateNewProjectId, setCurrentProjectId } = useChatStore()
 
-  const handleLogin = () => {
-    redirectToCureNovaLogin()
-  }
 
-  const handleLogout = () => {
-    logout()
-  }
 
   const handleCreateProject = (projectName: string) => {
     const newProject: Project = {
@@ -166,52 +158,7 @@ export default function Sidebar() {
           />
         </div>
 
-        {/* Bottom user info */}
-        <div className="px-4 md:px-6 py-4 border-t border-gray-200">
-          {isAuthenticated && user ? (
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                {user.avatar ? (
-                  <img 
-                    src={user.avatar} 
-                    alt={user.name}
-                    className="w-8 h-8 rounded-full object-cover"
-                  />
-                ) : (
-                  <User className="w-4 h-4 text-white" />
-                )}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-800 truncate">{user.name}</p>
-                <p className="text-xs text-gray-500 truncate">{user.email}</p>
-              </div>
-              <button 
-                onClick={handleLogout}
-                className="p-1 hover:bg-gray-200 rounded transition-colors"
-                title="Logout"
-              >
-                <LogIn className="w-4 h-4 text-gray-400" />
-              </button>
-            </div>
-          ) : (
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                <User className="w-4 h-4 text-gray-600" />
-              </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-800">Not logged in</p>
-                <p className="text-xs text-gray-500">Please login to access full features</p>
-              </div>
-              <button
-                onClick={handleLogin}
-                className="flex items-center justify-center space-x-2 px-3 py-2 bg-purple-300 hover:bg-purple-400 text-purple-800 rounded-lg transition-colors text-sm"
-              >
-                <LogIn className="w-4 h-4" />
-                <span>Login</span>
-              </button>
-            </div>
-          )}
-        </div>
+
       </motion.div>
 
       {/* Mobile toggle button */}
