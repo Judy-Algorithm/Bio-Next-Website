@@ -243,7 +243,7 @@ export default function ChatInterface({ sessionId }: ChatInterfaceProps) {
       )}
 
       {/* Input area - fixed at bottom on mobile */}
-      <div className="border-t border-gray-200 px-3 md:px-6 py-3 md:py-4 bg-white flex-shrink-0">
+      <div className="border-t border-gray-200 px-3 md:px-6 py-3 md:py-4 bg-white flex-shrink-0 pb-safe">
         <div className="flex items-center space-x-2 md:space-x-3">
           {/* File upload button */}
           <div className="relative">

@@ -10,7 +10,12 @@ import { useAuthStore } from '@/store/auth'
 import { useChatStore } from '@/store/chat'
 import UserProfile from './UserProfile'
 
-export default function Header() {
+// 添加侧边栏状态管理
+interface HeaderProps {
+  onToggleSidebar?: () => void
+}
+
+export default function Header({ onToggleSidebar }: HeaderProps = {}) {
   const { user, isAuthenticated, isLoading, checkAuthStatus } = useAuthStore()
   const { currentProjectId } = useChatStore()
   const [isClient, setIsClient] = useState(false)
@@ -31,7 +36,10 @@ export default function Header() {
       {/* Left side - Plus button and Session info */}
       <div className="flex items-center space-x-2 md:space-x-4">
         {/* Plus button - show on mobile */}
-        <button className="md:hidden p-2 rounded-lg hover:bg-purple-200 transition-colors">
+        <button 
+          onClick={onToggleSidebar}
+          className="md:hidden p-2 rounded-lg hover:bg-purple-200 transition-colors"
+        >
           <Plus className="w-4 h-4 text-purple-500" />
         </button>
         

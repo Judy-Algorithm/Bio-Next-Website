@@ -12,6 +12,7 @@ import { generateSessionId } from '@/lib/utils'
 export default function Home() {
   const [sessionId, setSessionId] = useState<string>('')
   const [isClient, setIsClient] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   
   // 使用统一的认证 Hook
   const { user, isAuthenticated, isLoading: authLoading } = useUnifiedAuth()
@@ -31,7 +32,7 @@ export default function Home() {
       {/* 主内容区域 */}
       <div className="flex-1 flex flex-col h-full w-full">
         {/* 头部 */}
-        <Header />
+        <Header onToggleSidebar={() => setIsSidebarOpen(true)} />
         
         {/* 聊天界面 */}
         <div className="flex-1 flex flex-col min-h-0">
