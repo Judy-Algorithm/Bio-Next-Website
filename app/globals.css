@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  /* 深色宇宙主题 - 黑色背景，深紫色聊天界面 */
+  /* 深色宇宙主题 - 黑色背景 */
   --background-white-main: #000000;
   --background-gray-main: #000000;
-  --background-card: #1a0b2e;
-  --background-input: #2d1b4e;
+  --background-card: #000000;
+  --background-input: #282342;
   
   /* 文字颜色 - 全部改为白色 */
   --text-primary: #ffffff;
@@ -30,7 +30,7 @@
   
   /* 渐变色彩 */
   --gradient-primary: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
-  --gradient-secondary: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 100%);
+  --gradient-secondary: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
 }
 
 * {
@@ -130,8 +130,8 @@ a {
     /* 深色模式使用相同的深色主题 */
     --background-white-main: #000000;
     --background-gray-main: #000000;
-    --background-card: #1a0b2e;
-    --background-input: #2d1b4e;
+    --background-card: #000000;
+    --background-input: #282342;
     --text-primary: #ffffff;
     --text-secondary: #ffffff;
     --text-muted: #ffffff;

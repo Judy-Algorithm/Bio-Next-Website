@@ -30,14 +30,14 @@ export default function NewProjectModal({ isOpen, onClose, onCreateProject }: Ne
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="bg-[#1a0b2e] rounded-lg shadow-xl w-96 max-w-md mx-4 border border-gray-600"
+            className="bg-black rounded-lg shadow-xl w-96 max-w-md mx-4 border border-gray-600"
           >
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-gray-600">
               <h2 className="text-xl font-semibold text-white">Project Name</h2>
               <button
                 onClick={onClose}
-                className="p-1 hover:bg-purple-800 rounded-full transition-colors"
+                className="p-1 hover:bg-gray-800 rounded-full transition-colors"
               >
                 <X className="w-5 h-5 text-white" />
               </button>
@@ -58,7 +58,7 @@ export default function NewProjectModal({ isOpen, onClose, onCreateProject }: Ne
                 </div>
 
                 {/* Help section */}
-                <div className="mb-6 p-4 bg-[#2d1b4e] rounded-lg">
+                <div className="mb-6 p-4 bg-gray-900 rounded-lg">
                   <div className="flex items-start space-x-3">
                     <Lightbulb className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                     <div>
@@ -75,7 +75,7 @@ export default function NewProjectModal({ isOpen, onClose, onCreateProject }: Ne
                   <button
                     type="button"
                     onClick={onClose}
-                    className="px-4 py-2 border border-gray-600 rounded-lg text-white hover:bg-purple-800 transition-colors"
+                    className="px-4 py-2 border border-gray-600 rounded-lg text-white hover:bg-gray-800 transition-colors"
                   >
                     Cancel
                   </button>
@@ -84,7 +84,7 @@ export default function NewProjectModal({ isOpen, onClose, onCreateProject }: Ne
                     disabled={!projectName.trim()}
                     className={`px-4 py-2 rounded-lg transition-colors ${
                       projectName.trim()
-                        ? 'bg-purple-600 hover:bg-purple-700 text-white'
+                        ? 'bg-gray-700 hover:bg-gray-600 text-white'
                         : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                     }`}
                   >

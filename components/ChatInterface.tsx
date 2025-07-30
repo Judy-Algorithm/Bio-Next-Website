@@ -131,7 +131,7 @@ export default function ChatInterface({ sessionId }: ChatInterfaceProps) {
   }
 
   return (
-    <div className="flex-1 flex flex-col bg-[#1a0b2e] h-full text-white">
+    <div className="flex-1 flex flex-col bg-black h-full text-white">
       {/* Messages list */}
       <div className="flex-1 overflow-y-auto p-3 md:p-6 space-y-6 min-h-0 pb-20 md:pb-4">
         <AnimatePresence>
@@ -196,23 +196,23 @@ export default function ChatInterface({ sessionId }: ChatInterfaceProps) {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mx-6 mb-4 p-3 bg-purple-900 border border-purple-600 rounded-lg"
+          className="mx-6 mb-4 p-3 bg-gray-900 border border-gray-600 rounded-lg"
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <AlertCircle className="w-4 h-4 text-purple-300" />
+              <AlertCircle className="w-4 h-4 text-gray-300" />
               <span className="text-sm text-white">Please upload files</span>
             </div>
             <div className="flex items-center space-x-2">
                               <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded text-sm"
+                  className="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded text-sm"
                 >
                   Upload
                 </button>
                 <button
                   onClick={() => setShowUploadPrompt(false)}
-                  className="px-3 py-1 text-purple-300 hover:bg-purple-800 rounded text-sm"
+                  className="px-3 py-1 text-gray-300 hover:bg-gray-800 rounded text-sm"
                 >
                   Close
                 </button>
@@ -223,10 +223,10 @@ export default function ChatInterface({ sessionId }: ChatInterfaceProps) {
 
       {/* Selected files display */}
       {selectedFiles.length > 0 && (
-        <div className="px-2 md:px-4 py-2 border-t border-gray-600 bg-[#2d1b4e]">
+        <div className="px-2 md:px-4 py-2 border-t border-gray-600 bg-black">
           <div className="flex flex-wrap gap-2">
             {selectedFiles.map((file, index) => (
-              <div key={index} className="flex items-center space-x-2 bg-[#1a0b2e] px-2 md:px-3 py-2 rounded-lg border border-gray-600">
+              <div key={index} className="flex items-center space-x-2 bg-gray-900 px-2 md:px-3 py-2 rounded-lg border border-gray-600">
                 <Paperclip className="w-3 h-3 md:w-4 md:h-4 text-white" />
                 <span className="text-xs md:text-sm text-white truncate max-w-20 md:max-w-32">{file.name}</span>
                 <span className="text-xs text-gray-300 hidden sm:inline">({formatFileSize(file.size)})</span>
@@ -243,7 +243,7 @@ export default function ChatInterface({ sessionId }: ChatInterfaceProps) {
       )}
 
       {/* Input area - fixed at bottom on mobile */}
-      <div className="border-t border-gray-700 px-3 md:px-6 py-3 md:py-4 bg-[#1a0b2e] flex-shrink-0 pb-safe">
+      <div className="border-t border-gray-700 px-3 md:px-6 py-3 md:py-4 bg-black flex-shrink-0 pb-safe">
         <div className="flex items-center space-x-2 md:space-x-3">
           {/* File upload button */}
           <div className="relative">
@@ -273,7 +273,7 @@ export default function ChatInterface({ sessionId }: ChatInterfaceProps) {
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
               placeholder="Type your message..."
-              className="w-full resize-none border border-gray-600 rounded-lg px-3 md:px-4 py-2 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-[#2d1b4e] text-white placeholder-gray-400"
+              className="w-full resize-none border border-gray-600 rounded-lg px-3 md:px-4 py-2 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-[#282342] text-white placeholder-gray-400"
               style={{ minHeight: '40px', maxHeight: '100px' }}
               disabled={isTyping}
             />

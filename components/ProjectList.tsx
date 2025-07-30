@@ -88,8 +88,8 @@ export default function ProjectList({
             animate={{ opacity: 1, x: 0 }}
             className={`group px-3 py-2 rounded-lg cursor-pointer transition-colors ${
               activeProjectId === project.id
-                ? 'bg-purple-600 text-white'
-                : 'hover:bg-purple-800 text-white'
+                ? 'bg-gray-700 text-white'
+                : 'hover:bg-gray-800 text-white'
             }`}
             onClick={() => !isRenaming && onSelectProject(project.id)}
           >
@@ -114,11 +114,11 @@ export default function ProjectList({
                           }
                         }}
                         onBlur={handleRenameSubmit}
-                        className="flex-1 px-2 py-1 text-sm border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-[#2d1b4e] text-white"
+                        className="flex-1 px-2 py-1 text-sm border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-gray-900 text-white"
                       />
                                               <button
                           onClick={handleRenameCancel}
-                          className="p-1 hover:bg-purple-800 rounded transition-colors"
+                          className="p-1 hover:bg-gray-800 rounded transition-colors"
                           title="Cancel rename"
                         >
                           <X className="w-3 h-3 text-white" />

@@ -56,7 +56,7 @@ export default function UserProfile() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="absolute right-0 top-full mt-2 w-80 bg-[#1a0b2e] rounded-lg shadow-lg border border-gray-600 z-50"
+            className="absolute right-0 top-full mt-2 w-80 bg-black rounded-lg shadow-lg border border-gray-600 z-50"
           >
             {/* User info card */}
             <div className="p-4 border-b border-gray-600">
@@ -118,7 +118,7 @@ export default function UserProfile() {
 
             {/* Action buttons */}
             <div className="p-4 border-t border-gray-600 space-y-2">
-              <button className="w-full flex items-center space-x-3 px-3 py-2 text-sm text-white hover:bg-purple-800 rounded-lg transition-colors">
+              <button className="w-full flex items-center space-x-3 px-3 py-2 text-sm text-white hover:bg-gray-800 rounded-lg transition-colors">
                 <Settings className="w-4 h-4" />
                 <span>Settings</span>
               </button>
