@@ -105,12 +105,12 @@ export default function Sidebar() {
         <div className="h-16 bg-transparent border-b border-white/20 flex items-center justify-between px-4 md:px-6 min-h-[64px]">
           <div className="flex items-center space-x-3">
             {/* Logo */}
-            <div className="w-8 h-8 relative flex-shrink-0">
+            <div className="w-10 h-10 relative flex-shrink-0">
               <Image
                 src="/logo.png"
                 alt="Bio-Next Logo"
-                width={32}
-                height={32}
+                width={40}
+                height={40}
                 className="rounded-lg object-contain"
                 priority
                 quality={100}
