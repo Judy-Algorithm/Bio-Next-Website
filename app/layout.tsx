@@ -35,9 +35,9 @@ export const metadata: Metadata = {
     images: ['/og-image.png'],
   },
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
+    icon: '/Pig_Robot.png',
+    shortcut: '/Pig_Robot.png',
+    apple: '/Pig_Robot.png',
   },
   manifest: '/manifest.json',
 }
