@@ -27,7 +27,7 @@ interface Project {
 }
 
 export default function Sidebar() {
-  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(true)
   const [showNewProjectModal, setShowNewProjectModal] = useState(false)
   const [projects, setProjects] = useState<Project[]>([])
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null)
@@ -79,13 +79,13 @@ export default function Sidebar() {
     <>
       {/* Mobile overlay */}
       <AnimatePresence>
-        {isCollapsed && (
+        {!isCollapsed && (
           <motion.div
             className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setIsCollapsed(false)}
+            onClick={() => setIsCollapsed(true)}
           />
         )}
       </AnimatePresence>
@@ -94,8 +94,8 @@ export default function Sidebar() {
       <motion.div 
         className={`fixed md:relative z-50 h-full bg-white border-r border-gray-200 flex flex-col transition-all duration-300 ${
           isCollapsed 
-            ? 'w-64 translate-x-0' 
-            : 'w-0 md:w-64 -translate-x-full md:translate-x-0 opacity-0 md:opacity-100'
+            ? 'w-0 md:w-64 -translate-x-full md:translate-x-0 opacity-0 md:opacity-100' 
+            : 'w-64 translate-x-0'
         }`}
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -127,7 +127,7 @@ export default function Sidebar() {
             </button>
             {/* Close button for mobile */}
             <button
-              onClick={() => setIsCollapsed(false)}
+              onClick={() => setIsCollapsed(true)}
               className="md:hidden p-2 rounded-lg hover:bg-gray-200 transition-colors"
             >
               <X className="w-4 h-4 text-gray-600" />
@@ -163,7 +163,7 @@ export default function Sidebar() {
 
       {/* Mobile toggle button */}
       <button
-        onClick={() => setIsCollapsed(true)}
+        onClick={() => setIsCollapsed(false)}
         className="fixed top-20 left-4 z-30 md:hidden p-3 bg-white border border-gray-200 rounded-lg shadow-lg hover:bg-gray-50 transition-colors"
       >
         <ChevronRight className="w-5 h-5 text-gray-600" />
