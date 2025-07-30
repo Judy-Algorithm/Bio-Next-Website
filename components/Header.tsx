@@ -5,7 +5,8 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { 
   Settings,
-  Menu
+  Menu,
+  Plus
 } from 'lucide-react'
 import { useAuthStore } from '@/store/auth'
 import { useChatStore } from '@/store/chat'
@@ -29,8 +30,13 @@ export default function Header() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Left side - Session info */}
+      {/* Left side - Plus button and Session info */}
       <div className="flex items-center space-x-2 md:space-x-4">
+        {/* Plus button - show on mobile */}
+        <button className="md:hidden p-2 rounded-lg hover:bg-purple-200 transition-colors">
+          <Plus className="w-4 h-4 text-purple-500" />
+        </button>
+        
         <div className="flex items-center space-x-2">
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
           <span className="text-xs md:text-sm text-gray-600">
@@ -47,14 +53,9 @@ export default function Header() {
           <Settings className="w-4 h-4 md:w-5 md:h-5 text-gray-600" />
         </button>
 
-        {/* Mobile menu button - only show on mobile */}
-        <button className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors">
-          <Menu className="w-4 h-4 text-gray-600" />
-        </button>
-
-        {/* User profile - only show if authenticated */}
+        {/* User profile - show on all devices */}
         {isAuthenticated && user && (
-          <div className="hidden md:block">
+          <div className="block">
             <UserProfile />
           </div>
         )}
