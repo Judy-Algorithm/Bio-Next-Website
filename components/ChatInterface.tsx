@@ -258,10 +258,10 @@ export default function ChatInterface({ sessionId }: ChatInterfaceProps) {
             />
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="p-2 md:p-2.5 hover:bg-purple-200 rounded-lg transition-colors"
+              className="p-2 md:p-2.5 hover:bg-white/20 rounded-lg transition-colors"
               title="Upload bioinformatics files"
             >
-              <Paperclip className="w-4 h-4 md:w-5 md:h-5 text-purple-500" />
+              <Paperclip className="w-4 h-4 md:w-5 md:h-5 text-white" />
             </button>
           </div>
 
@@ -293,8 +293,8 @@ export default function ChatInterface({ sessionId }: ChatInterfaceProps) {
             disabled={!inputValue.trim() || isTyping}
             className={`p-2 md:p-2.5 rounded-lg transition-colors ${
               inputValue.trim() && !isTyping
-                ? 'bg-purple-300 hover:bg-purple-400 text-purple-800'
-                : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                ? 'bg-white/20 hover:bg-white/30 text-white'
+                : 'bg-gray-700 text-gray-400 cursor-not-allowed'
             }`}
           >
             <Send className="w-4 h-4 md:w-5 md:h-5" />

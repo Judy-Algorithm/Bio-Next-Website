@@ -77,10 +77,10 @@ const EmojiPickerComponent: React.FC<EmojiPickerProps> = ({
     >
       <button
         onClick={() => setShowPicker(!showPicker)}
-        className="p-2 hover:bg-purple-200 rounded-lg transition-colors"
+        className="p-2 hover:bg-white/20 rounded-lg transition-colors"
         type="button"
       >
-        <Smile className="w-5 h-5 text-purple-500" />
+        <Smile className="w-5 h-5 text-white" />
       </button>
       
       {showPicker && (

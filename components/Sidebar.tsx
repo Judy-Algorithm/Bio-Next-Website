@@ -121,9 +121,9 @@ export default function Sidebar() {
           <div className="flex items-center space-x-2">
             <button
               onClick={() => setShowNewProjectModal(true)}
-              className="p-2 rounded-lg hover:bg-purple-200 transition-colors"
+              className="p-2 rounded-lg hover:bg-white/20 transition-colors"
             >
-              <Plus className="w-4 h-4 md:w-5 md:h-5 text-purple-500" />
+              <Plus className="w-4 h-4 md:w-5 md:h-5 text-white" />
             </button>
             {/* Close button for mobile */}
             <button
