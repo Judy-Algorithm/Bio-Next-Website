@@ -92,7 +92,7 @@ export default function Sidebar() {
 
       {/* Sidebar */}
       <motion.div 
-        className={`fixed md:relative z-50 h-full bg-white border-r border-gray-200 flex flex-col transition-all duration-300 ${
+        className={`fixed md:relative z-50 h-full bg-[var(--background-card)] border-r border-[var(--border-color)] flex flex-col transition-all duration-300 ${
           isCollapsed 
             ? 'hidden md:block w-0 md:w-64 -translate-x-full md:translate-x-0 opacity-0 md:opacity-100' 
             : 'w-64 translate-x-0'
@@ -102,7 +102,7 @@ export default function Sidebar() {
         transition={{ duration: 0.3 }}
       >
         {/* Header */}
-        <div className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 md:px-6 min-h-[64px]">
+        <div className="h-16 bg-[var(--background-card)] border-b border-[var(--border-color)] flex items-center justify-between px-4 md:px-6 min-h-[64px]">
           <div className="flex items-center space-x-3">
             {/* Logo */}
             <div className="w-8 h-8 relative flex-shrink-0">

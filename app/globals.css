@@ -3,15 +3,34 @@
 @tailwind utilities;
 
 :root {
-  --background-white-main: #ffffff;
-  --background-gray-main: #f8f9fa;
-  --text-primary: #1a1a1a;
-  --text-secondary: #6b7280;
-  --border-color: #e5e7eb;
-  --primary-color: #3b82f6;
+  /* 深色宇宙主题 - 与CureNova风格一致 */
+  --background-white-main: #0a0a0f;
+  --background-gray-main: #1a1a2e;
+  --background-card: #16213e;
+  --background-input: #0f3460;
+  
+  /* 文字颜色 */
+  --text-primary: #ffffff;
+  --text-secondary: #a8b2d1;
+  --text-muted: #64748b;
+  
+  /* 边框和分割线 */
+  --border-color: #334155;
+  --border-light: #475569;
+  
+  /* 主题色彩 - 紫色渐变 */
+  --primary-color: #8b5cf6;
+  --primary-light: #a78bfa;
+  --primary-dark: #7c3aed;
+  
+  /* 辅助色彩 */
   --success-color: #10b981;
   --warning-color: #f59e0b;
   --error-color: #ef4444;
+  
+  /* 渐变色彩 */
+  --gradient-primary: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+  --gradient-secondary: linear-gradient(135deg, #1e293b 0%, #334155 100%);
 }
 
 * {
@@ -108,10 +127,15 @@ a {
 /* 响应式工具类 */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background-white-main: #1a1a1a;
-    --background-gray-main: #2d2d2d;
+    /* 深色模式使用相同的深色主题 */
+    --background-white-main: #0a0a0f;
+    --background-gray-main: #1a1a2e;
+    --background-card: #16213e;
+    --background-input: #0f3460;
     --text-primary: #ffffff;
-    --text-secondary: #a1a1aa;
-    --border-color: #404040;
+    --text-secondary: #a8b2d1;
+    --text-muted: #64748b;
+    --border-color: #334155;
+    --border-light: #475569;
   }
 } 
