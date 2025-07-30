@@ -116,7 +116,7 @@ export default function Sidebar() {
                 quality={100}
               />
             </div>
-            <h1 className="hidden md:block text-lg md:text-xl font-bold text-gray-800">Bio-Next</h1>
+            <h1 className="text-lg md:text-xl font-bold text-gray-800">Bio-Next</h1>
           </div>
           <div className="flex items-center space-x-2">
             <button
@@ -164,7 +164,7 @@ export default function Sidebar() {
       {/* Mobile toggle button */}
       <button
         onClick={() => setIsCollapsed(false)}
-        className="fixed bottom-4 left-4 z-30 md:hidden p-3 bg-white border border-gray-200 rounded-lg shadow-lg hover:bg-gray-50 transition-colors"
+        className="fixed bottom-20 left-4 z-30 md:hidden p-3 bg-white border border-gray-200 rounded-lg shadow-lg hover:bg-gray-50 transition-colors"
       >
         <ChevronRight className="w-5 h-5 text-gray-600" />
       </button>
