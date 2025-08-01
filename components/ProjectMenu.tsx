@@ -116,66 +116,37 @@ export default function ProjectMenu({
           console.log('Menu button clicked, current isOpen:', isOpen)
           setIsOpen(!isOpen)
         }}
-        className="p-1 hover:bg-gray-200 rounded transition-colors opacity-60 hover:opacity-100"
+        className="p-1 hover:bg-gray-200 rounded transition-colors opacity-60 hover:opacity-100 focus:outline-none"
       >
         <MoreHorizontal className="w-4 h-4 text-gray-500" />
       </button>
 
-      {/* 简单菜单版本 - 如果AnimatePresence有问题 */}
-      {isOpen && (
-        <div 
-          className="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-[9999] min-w-32"
-          style={{ zIndex: 9999 }}
-        >
-          <div className="py-1">
-            <button
-              onClick={handleRename}
-              className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-            >
-              <Edit className="w-4 h-4" />
-              <span>Rename Project</span>
-            </button>
-            <button
-              onClick={handleDelete}
-              className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
-            >
-              <Trash2 className="w-4 h-4" />
-              <span>Delete Project</span>
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* 动画菜单版本 */}
       <AnimatePresence>
         {isOpen && (
-          <>
-            {console.log('Rendering menu, isOpen:', isOpen)}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: -10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: -10 }}
-              className="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-[9999] min-w-32"
-              style={{ zIndex: 9999 }}
-            >
-              <div className="py-1">
-                <button
-                  onClick={handleRename}
-                  className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                >
-                  <Edit className="w-4 h-4" />
-                  <span>Rename Project</span>
-                </button>
-                <button
-                  onClick={handleDelete}
-                  className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
-                >
-                  <Trash2 className="w-4 h-4" />
-                  <span>Delete Project</span>
-                </button>
-              </div>
-            </motion.div>
-          </>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: -10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -10 }}
+            className="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-[9999] min-w-32"
+            style={{ zIndex: 9999 }}
+          >
+            <div className="py-1">
+              <button
+                onClick={handleRename}
+                className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+              >
+                <Edit className="w-4 h-4" />
+                <span>Rename Project</span>
+              </button>
+              <button
+                onClick={handleDelete}
+                className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+              >
+                <Trash2 className="w-4 h-4" />
+                <span>Delete Project</span>
+              </button>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>
