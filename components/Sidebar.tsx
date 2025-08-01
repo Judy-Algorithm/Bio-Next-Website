@@ -42,6 +42,7 @@ export default function Sidebar({ projects = [] }: SidebarProps) {
 
   // 当projects prop更新时，更新本地状态
   React.useEffect(() => {
+    console.log('Sidebar: projects prop updated:', projects)
     setLocalProjects(projects)
   }, [projects])
 

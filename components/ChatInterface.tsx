@@ -80,10 +80,17 @@ export default function ChatInterface({ sessionId, onCreateProject }: ChatInterf
 
   // 创建新项目
   const createNewProject = (aiResponse: string) => {
-    if (hasCreatedProject) return
+    console.log('createNewProject called with:', aiResponse)
+    if (hasCreatedProject) {
+      console.log('Project already created, skipping')
+      return
+    }
 
     const projectName = generateProjectName(aiResponse)
     const projectId = generateShortSessionId()
+    
+    console.log('Generated project name:', projectName)
+    console.log('Generated project ID:', projectId)
     
     const newProject: Project = {
       id: Math.random().toString(36).substring(2, 15),
@@ -98,10 +105,14 @@ export default function ChatInterface({ sessionId, onCreateProject }: ChatInterf
     
     // 通知父组件创建项目
     if (onCreateProject) {
+      console.log('Calling onCreateProject with:', newProject)
       onCreateProject(newProject)
+    } else {
+      console.log('onCreateProject is not provided')
     }
     
     setHasCreatedProject(true)
+    console.log('Project creation completed')
   }
 
   const handleSendMessage = async () => {
@@ -143,7 +154,8 @@ export default function ChatInterface({ sessionId, onCreateProject }: ChatInterf
       setMessages(prev => [...prev, assistantMessage])
       
       // 如果是第一次AI回答，创建项目（用户发送第一条消息后的AI回答）
-      if (!hasCreatedProject && messages.length === 2) {
+      if (!hasCreatedProject && messages.length >= 2) {
+        console.log('Creating project with AI response:', response.content)
         createNewProject(response.content)
       }
       

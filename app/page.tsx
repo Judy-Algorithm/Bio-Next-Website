@@ -36,7 +36,12 @@ export default function Home() {
 
   // 处理项目创建
   const handleCreateProject = (project: Project) => {
-    setProjects(prev => [project, ...prev])
+    console.log('Home: handleCreateProject called with:', project)
+    setProjects(prev => {
+      const newProjects = [project, ...prev]
+      console.log('Home: Updated projects:', newProjects)
+      return newProjects
+    })
   }
 
   return (
