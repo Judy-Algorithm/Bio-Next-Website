@@ -120,22 +120,40 @@ export default function ProjectMenu({
         <MoreHorizontal className="w-4 h-4 text-gray-500" />
       </button>
 
+      {/* 调试信息 */}
+      {isOpen && (
+        <div 
+          className="fixed bg-red-500 text-white p-2 rounded z-[99999]"
+          style={{ 
+            zIndex: 99999,
+            top: menuRef.current?.getBoundingClientRect().bottom! + 4,
+            right: window.innerWidth - (menuRef.current?.getBoundingClientRect().right! || 0)
+          }}
+        >
+          DEBUG: Menu is open! isOpen = {isOpen.toString()}
+        </div>
+      )}
+
       {/* 菜单内容 */}
       {isOpen && (
         <div 
           className="fixed bg-white border border-gray-200 rounded-lg shadow-lg z-[99999] min-w-32"
           style={{ 
             zIndex: 99999,
-            top: menuRef.current?.getBoundingClientRect().bottom! + 4,
+            top: (menuRef.current?.getBoundingClientRect().bottom! || 0) + 4,
             right: window.innerWidth - (menuRef.current?.getBoundingClientRect().right! || 0)
           }}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="py-1">
+            <div className="px-3 py-2 text-sm text-gray-700 bg-gray-50">
+              Menu Content Test
+            </div>
             <button
               onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
+                console.log('Rename clicked')
                 handleRename()
               }}
               className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
@@ -147,6 +165,7 @@ export default function ProjectMenu({
               onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
+                console.log('Delete clicked')
                 handleDelete()
               }}
               className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
