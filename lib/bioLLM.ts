@@ -50,28 +50,32 @@ export async function callBioLLM({
   sessionId: string
 }): Promise<BioAnalysisResponse> {
   try {
-    // 如果有文件，创建FormData
+    // 如果有文件，只传递文件名和大小信息
     if (files.length > 0) {
-      const formData = new FormData()
-      formData.append('message', message)
-      formData.append('sessionId', sessionId)
+      const fileInfo = files.map(file => ({
+        name: file.name,
+        size: file.size,
+        type: file.type
+      }))
       
-      // 添加所有文件
-      files.forEach((file, index) => {
-        formData.append(`file${index}`, file)
-      })
-      
-      // 调用AI进行对话（带文件）
-      const response = await fetch('/api/bio-llm', {
+      // 调用AI进行对话（只传递文件信息，不传递实际文件）
+      const fileResponse = await fetch('/api/bio-llm', {
         method: 'POST',
-        body: formData
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: message,
+          sessionId: sessionId,
+          files: fileInfo
+        })
       })
       
-      if (!response.ok) {
+      if (!fileResponse.ok) {
         throw new Error('Failed to call Bio LLM with files')
       }
       
-      const result = await response.json()
+      const result = await fileResponse.json()
       
       return {
         content: result.content,

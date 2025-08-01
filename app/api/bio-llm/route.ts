@@ -19,27 +19,15 @@ const openai = new OpenAI({
 
 export async function POST(request: NextRequest) {
   try {
-    // 检查是否是文件上传请求
-    const contentType = request.headers.get('content-type') || ''
+    const { messages, sessionId, files } = await request.json()
     
-    if (contentType.includes('multipart/form-data')) {
-      // 处理文件上传
-      const formData = await request.formData()
-      const message = formData.get('message') as string
-      const sessionId = formData.get('sessionId') as string
-      const files: File[] = []
+    // 如果有文件信息，构建增强消息
+    if (files && files.length > 0) {
+      const fileInfo = files.map((file: any) => 
+        `${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB, ${file.type})`
+      ).join(', ')
       
-      // 提取所有文件
-      const entries = Array.from(formData.entries())
-      for (const [key, value] of entries) {
-        if (key.startsWith('file') && value instanceof File) {
-          files.push(value)
-        }
-      }
-      
-      // 构建包含文件信息的消息
-      const fileInfo = files.map(file => `${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`).join(', ')
-      const enhancedMessage = `${message}\n\nUploaded files: ${fileInfo}`
+      const enhancedMessage = `${messages ? messages[messages.length - 1]?.content || '' : ''}\n\nUploaded files: ${fileInfo}`
       
       // 调用自定义API
       const completion = await openai.chat.completions.create({
@@ -62,7 +50,6 @@ export async function POST(request: NextRequest) {
       })
     } else {
       // 原有的JSON请求处理
-      const { messages, sessionId } = await request.json()
 
       // 调用自定义API
       const completion = await openai.chat.completions.create({

@@ -30,9 +30,10 @@ interface Project {
 interface ChatInterfaceProps {
   sessionId: string
   onCreateProject?: (project: Project) => void
+  onUpdateProjectMessageCount?: (projectId: string, messageCount: number) => void
 }
 
-export default function ChatInterface({ sessionId, onCreateProject }: ChatInterfaceProps) {
+export default function ChatInterface({ sessionId, onCreateProject, onUpdateProjectMessageCount }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -121,8 +122,11 @@ export default function ChatInterface({ sessionId, onCreateProject }: ChatInterf
     // 如果没有输入文本也没有选择文件，则不发送
     if (!inputValue.trim() && selectedFiles.length === 0) return
 
-    // 如果用户没有输入文本但有文件，添加默认消息
-    const messageContent = inputValue.trim() || (selectedFiles.length > 0 ? `Uploaded ${selectedFiles.length} file(s) for analysis` : '')
+    // 如果用户没有输入文本但有文件，添加详细的文件信息
+    const fileInfo = selectedFiles.length > 0 
+      ? `Uploaded ${selectedFiles.length} file(s): ${selectedFiles.map(f => `${f.name} (${formatFileSize(f.size)})`).join(', ')}`
+      : ''
+    const messageContent = inputValue.trim() || fileInfo
     
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -166,6 +170,14 @@ export default function ChatInterface({ sessionId, onCreateProject }: ChatInterf
           console.log('Current messages length:', newMessages.length)
           console.log('User messages count:', userMessages.length)
           createNewProject(response.content)
+        }
+        
+        // 更新项目消息数量
+        if (onUpdateProjectMessageCount && hasCreatedProject) {
+          const { currentProjectId } = useChatStore.getState()
+          if (currentProjectId) {
+            onUpdateProjectMessageCount(currentProjectId, newMessages.length)
+          }
         }
         
         return newMessages
@@ -348,13 +360,13 @@ export default function ChatInterface({ sessionId, onCreateProject }: ChatInterf
               multiple
               onChange={handleFileUpload}
               className="hidden"
-              accept=".fastq,.fq,.fasta,.fa,.bam,.sam,.cram,.vcf,.bcf,.gff,.gtf,.bed,.bedgraph,.wig,.bigwig,.bigbed,.maf,.ace,.ab1,.scf,.pdb,.mmcif,.sra,.hdf5,.h5,.loom,.mtx,.cel,.cdf,.mzML,.mzXML,.mgf,.pepXML,.protXML,.phy,.nex,.nwk,.tree,.newick,.csv,.tsv,.txt,.xlsx,.xls,.ods,.json,.yaml,.yml,.xml,.obo,.owl,.sbml,.rds,.rdata,.cool,.hic,.mcool"
-              title="Upload bioinformatics files (FASTQ, BAM, VCF, BED, etc.)"
+              accept="*"
+              title="Upload any files - Max 500MB per file"
             />
             <button
               onClick={() => fileInputRef.current?.click()}
               className="p-2 md:p-2.5 hover:bg-purple-200 rounded-lg transition-colors"
-              title="Upload bioinformatics files (FASTQ, BAM, VCF, BED, etc.)"
+              title="Upload any files - Max 500MB per file"
             >
               <Paperclip className="w-4 h-4 md:w-5 md:h-5 text-purple-500" />
             </button>
