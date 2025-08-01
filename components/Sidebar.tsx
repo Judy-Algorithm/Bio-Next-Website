@@ -9,13 +9,15 @@ import {
   Plus, 
   X,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Folder
 } from 'lucide-react'
 import { useAuthStore } from '@/store/auth'
 import { useChatStore } from '@/store/chat'
 import NewProjectModal from './NewProjectModal'
 import ProjectList from './ProjectList'
 import { redirectToCureNovaLogin, generateShortSessionId } from '@/lib/utils'
+import React from 'react'
 
 interface Project {
   id: string
@@ -26,15 +28,22 @@ interface Project {
   lastMessage?: string
 }
 
-export default function Sidebar() {
+interface SidebarProps {
+  projects?: Project[]
+}
+
+export default function Sidebar({ projects = [] }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(true)
   const [showNewProjectModal, setShowNewProjectModal] = useState(false)
-  const [projects, setProjects] = useState<Project[]>([])
+  const [localProjects, setLocalProjects] = useState<Project[]>(projects)
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null)
   const { user, isAuthenticated, logout } = useAuthStore()
   const { generateNewProjectId, setCurrentProjectId } = useChatStore()
 
-
+  // 当projects prop更新时，更新本地状态
+  React.useEffect(() => {
+    setLocalProjects(projects)
+  }, [projects])
 
   const handleCreateProject = (projectName: string) => {
     const newProject: Project = {
@@ -44,7 +53,7 @@ export default function Sidebar() {
       createdAt: new Date(),
       messageCount: 0
     }
-    setProjects(prev => [newProject, ...prev])
+    setLocalProjects(prev => [newProject, ...prev])
     setActiveProjectId(newProject.id)
     // 设置当前项目的Project ID
     setCurrentProjectId(newProject.projectId)
@@ -53,7 +62,7 @@ export default function Sidebar() {
   const handleSelectProject = (projectId: string) => {
     setActiveProjectId(projectId)
     // 获取选中项目的固定Project ID
-    const selectedProject = projects.find(p => p.id === projectId)
+    const selectedProject = localProjects.find(p => p.id === projectId)
     if (selectedProject) {
       setCurrentProjectId(selectedProject.projectId)
     }
@@ -61,7 +70,7 @@ export default function Sidebar() {
   }
 
   const handleRenameProject = (projectId: string, newName: string) => {
-    setProjects(prev => prev.map(project => 
+    setLocalProjects(prev => prev.map(project => 
       project.id === projectId 
         ? { ...project, name: newName }
         : project
@@ -69,9 +78,9 @@ export default function Sidebar() {
   }
 
   const handleDeleteProject = (projectId: string) => {
-    setProjects(prev => prev.filter(project => project.id !== projectId))
+    setLocalProjects(prev => prev.filter(project => project.id !== projectId))
     if (activeProjectId === projectId) {
-      setActiveProjectId(projects.length > 1 ? projects[0]?.id || null : null)
+      setActiveProjectId(localProjects.length > 1 ? localProjects[0]?.id || null : null)
     }
   }
 
@@ -150,14 +159,13 @@ export default function Sidebar() {
         {/* Projects list */}
         <div className="flex-1 px-2 md:px-4 overflow-y-auto">
           <ProjectList
-            projects={projects}
+            projects={localProjects}
             activeProjectId={activeProjectId}
             onSelectProject={handleSelectProject}
             onRenameProject={handleRenameProject}
             onDeleteProject={handleDeleteProject}
           />
         </div>
-
 
       </motion.div>
 

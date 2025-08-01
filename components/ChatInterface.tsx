@@ -7,6 +7,8 @@ import MessageItem from './MessageItem'
 import EmojiPickerComponent from './EmojiPicker'
 import { callBioLLM } from '@/lib/bioLLM'
 import Image from 'next/image'
+import { useChatStore } from '@/store/chat'
+import { generateShortSessionId } from '@/lib/utils'
 
 interface Message {
   id: string
@@ -16,11 +18,21 @@ interface Message {
   isTyping?: boolean
 }
 
-interface ChatInterfaceProps {
-  sessionId: string
+interface Project {
+  id: string
+  projectId: string
+  name: string
+  createdAt: Date
+  messageCount: number
+  lastMessage?: string
 }
 
-export default function ChatInterface({ sessionId }: ChatInterfaceProps) {
+interface ChatInterfaceProps {
+  sessionId: string
+  onCreateProject?: (project: Project) => void
+}
+
+export default function ChatInterface({ sessionId, onCreateProject }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -33,9 +45,12 @@ export default function ChatInterface({ sessionId }: ChatInterfaceProps) {
   const [isTyping, setIsTyping] = useState(false)
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [showUploadPrompt, setShowUploadPrompt] = useState(false)
+  const [hasCreatedProject, setHasCreatedProject] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  
+  const { setCurrentProjectId } = useChatStore()
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -45,24 +60,75 @@ export default function ChatInterface({ sessionId }: ChatInterfaceProps) {
     scrollToBottom()
   }, [messages])
 
-  const handleSendMessage = async () => {
-    if (!inputValue.trim() || isTyping) return
+  // 根据AI回答生成项目名称
+  const generateProjectName = (aiResponse: string): string => {
+    // 提取关键词作为项目名称
+    const keywords = aiResponse.toLowerCase()
+      .replace(/[^\w\s]/g, '')
+      .split(/\s+/)
+      .filter(word => word.length > 3)
+      .slice(0, 3)
+      .join(' ')
+    
+    if (keywords) {
+      return keywords.charAt(0).toUpperCase() + keywords.slice(1)
+    }
+    
+    // 如果没有合适的关键词，使用时间戳
+    return `Project_${new Date().toLocaleDateString()}`
+  }
 
+  // 创建新项目
+  const createNewProject = (aiResponse: string) => {
+    if (hasCreatedProject) return
+
+    const projectName = generateProjectName(aiResponse)
+    const projectId = generateShortSessionId()
+    
+    const newProject: Project = {
+      id: Math.random().toString(36).substring(2, 15),
+      projectId: projectId,
+      name: projectName,
+      createdAt: new Date(),
+      messageCount: 1
+    }
+
+    // 设置当前项目ID
+    setCurrentProjectId(projectId)
+    
+    // 通知父组件创建项目
+    if (onCreateProject) {
+      onCreateProject(newProject)
+    }
+    
+    setHasCreatedProject(true)
+  }
+
+  const handleSendMessage = async () => {
+    if (isTyping) return
+    
+    // 如果没有输入文本也没有选择文件，则不发送
+    if (!inputValue.trim() && selectedFiles.length === 0) return
+
+    // 如果用户没有输入文本但有文件，添加默认消息
+    const messageContent = inputValue.trim() || (selectedFiles.length > 0 ? `Uploaded ${selectedFiles.length} file(s) for analysis` : '')
+    
     const userMessage: Message = {
       id: Date.now().toString(),
-      content: inputValue,
+      content: messageContent,
       type: 'user',
       timestamp: new Date(),
     }
 
     setMessages(prev => [...prev, userMessage])
     setInputValue('')
+    setSelectedFiles([]) // 清空文件列表
     setIsTyping(true)
 
     try {
       // 调用生物信息学LLM
       const response = await callBioLLM({
-        message: inputValue,
+        message: messageContent,
         files: selectedFiles,
         sessionId
       })
@@ -75,6 +141,11 @@ export default function ChatInterface({ sessionId }: ChatInterfaceProps) {
       }
 
       setMessages(prev => [...prev, assistantMessage])
+      
+      // 如果是第一次AI回答，创建项目（用户发送第一条消息后的AI回答）
+      if (!hasCreatedProject && messages.length === 2) {
+        createNewProject(response.content)
+      }
       
       // 如果需要上传文件，显示提示
       if (response.needsDataUpload) {
@@ -253,13 +324,13 @@ export default function ChatInterface({ sessionId }: ChatInterfaceProps) {
               multiple
               onChange={handleFileUpload}
               className="hidden"
-              accept=".fastq,.fq,.fasta,.fa,.bam,.sam,.vcf,.gff,.gtf,.bed,.csv,.tsv,.txt,.xlsx,.xls,.json,.xml"
-              title="Upload bioinformatics files"
+              accept=".fastq,.fq,.fasta,.fa,.bam,.sam,.cram,.vcf,.bcf,.gff,.gtf,.bed,.bedgraph,.wig,.bigwig,.bigbed,.maf,.ace,.ab1,.scf,.pdb,.mmcif,.sra,.hdf5,.h5,.loom,.mtx,.cel,.cdf,.mzML,.mzXML,.mgf,.pepXML,.protXML,.phy,.nex,.nwk,.tree,.newick,.csv,.tsv,.txt,.xlsx,.xls,.ods,.json,.yaml,.yml,.xml,.obo,.owl,.sbml,.rds,.rdata,.cool,.hic,.mcool"
+              title="Upload bioinformatics files (FASTQ, BAM, VCF, BED, etc.)"
             />
             <button
               onClick={() => fileInputRef.current?.click()}
               className="p-2 md:p-2.5 hover:bg-purple-200 rounded-lg transition-colors"
-              title="Upload bioinformatics files"
+              title="Upload bioinformatics files (FASTQ, BAM, VCF, BED, etc.)"
             >
               <Paperclip className="w-4 h-4 md:w-5 md:h-5 text-purple-500" />
             </button>
@@ -290,9 +361,9 @@ export default function ChatInterface({ sessionId }: ChatInterfaceProps) {
           {/* Send button */}
           <button
             onClick={handleSendMessage}
-            disabled={!inputValue.trim() || isTyping}
+            disabled={(!inputValue.trim() && selectedFiles.length === 0) || isTyping}
             className={`p-2 md:p-2.5 rounded-lg transition-colors ${
-              inputValue.trim() && !isTyping
+              (inputValue.trim() || selectedFiles.length > 0) && !isTyping
                 ? 'bg-purple-300 hover:bg-purple-400 text-purple-800'
                 : 'bg-gray-100 text-gray-400 cursor-not-allowed'
             }`}

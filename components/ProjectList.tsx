@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { FolderOpen, MessageSquare, Clock, X } from 'lucide-react'
+import { FolderOpen, MessageSquare, Clock, X, Hash } from 'lucide-react'
 import ProjectMenu from './ProjectMenu'
 
 interface Project {
@@ -132,6 +132,13 @@ export default function ProjectList({
                     <span>{formatDate(project.createdAt)}</span>
                   </span>
                 </div>
+                
+                {/* Project ID 显示 */}
+                <div className="flex items-center space-x-1 mt-1">
+                  <Hash className="w-3 h-3 text-green-500" />
+                  <span className="text-xs text-green-600 font-mono">Project ID: {project.projectId}</span>
+                </div>
+                
                 {project.lastMessage && (
                   <p className="text-xs text-gray-500 truncate mt-1">
                     {project.lastMessage}

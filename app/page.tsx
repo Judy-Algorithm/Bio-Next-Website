@@ -9,10 +9,20 @@ import Header from '@/components/Header'
 import { useUnifiedAuth } from '@/hooks/useAuth'
 import { generateSessionId } from '@/lib/utils'
 
+interface Project {
+  id: string
+  projectId: string
+  name: string
+  createdAt: Date
+  messageCount: number
+  lastMessage?: string
+}
+
 export default function Home() {
   const [sessionId, setSessionId] = useState<string>('')
   const [isClient, setIsClient] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [projects, setProjects] = useState<Project[]>([])
   
   // 使用统一的认证 Hook
   const { user, isAuthenticated, isLoading: authLoading } = useUnifiedAuth()
@@ -24,10 +34,15 @@ export default function Home() {
     setSessionId(id)
   }, [])
 
+  // 处理项目创建
+  const handleCreateProject = (project: Project) => {
+    setProjects(prev => [project, ...prev])
+  }
+
   return (
     <div className="flex h-[100dvh] bg-[var(--background-gray-main)]">
       {/* 侧边栏 */}
-      <Sidebar />
+      <Sidebar projects={projects} />
       
       {/* 主内容区域 */}
       <div className="flex-1 flex flex-col h-full w-full">
@@ -38,6 +53,7 @@ export default function Home() {
         <div className="flex-1 flex flex-col min-h-0">
           <ChatInterface 
             sessionId={isClient ? sessionId : ''}
+            onCreateProject={handleCreateProject}
           />
         </div>
       </div>
