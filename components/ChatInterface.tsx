@@ -97,7 +97,7 @@ export default function ChatInterface({ sessionId, onCreateProject }: ChatInterf
       projectId: projectId,
       name: projectName,
       createdAt: new Date(),
-      messageCount: 1
+      messageCount: 2 // 用户消息 + AI回复
     }
 
     // 设置当前项目ID
@@ -131,7 +131,11 @@ export default function ChatInterface({ sessionId, onCreateProject }: ChatInterf
       timestamp: new Date(),
     }
 
-    setMessages(prev => [...prev, userMessage])
+    setMessages(prev => {
+      const newMessages = [...prev, userMessage]
+      console.log('Added user message, total messages:', newMessages.length)
+      return newMessages
+    })
     setInputValue('')
     setSelectedFiles([]) // 清空文件列表
     setIsTyping(true)
@@ -151,13 +155,21 @@ export default function ChatInterface({ sessionId, onCreateProject }: ChatInterf
         timestamp: new Date(),
       }
 
-      setMessages(prev => [...prev, assistantMessage])
-      
-      // 如果是第一次AI回答，创建项目（用户发送第一条消息后的AI回答）
-      if (!hasCreatedProject && messages.length >= 2) {
-        console.log('Creating project with AI response:', response.content)
-        createNewProject(response.content)
-      }
+      setMessages(prev => {
+        const newMessages = [...prev, assistantMessage]
+        console.log('Added assistant message, total messages:', newMessages.length)
+        
+        // 在更新后的消息列表中检查用户消息数量
+        const userMessages = newMessages.filter(msg => msg.type === 'user')
+        if (!hasCreatedProject && userMessages.length === 1) {
+          console.log('Creating project with AI response:', response.content)
+          console.log('Current messages length:', newMessages.length)
+          console.log('User messages count:', userMessages.length)
+          createNewProject(response.content)
+        }
+        
+        return newMessages
+      })
       
       // 如果需要上传文件，显示提示
       if (response.needsDataUpload) {

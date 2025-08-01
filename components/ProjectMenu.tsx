@@ -113,7 +113,7 @@ export default function ProjectMenu({
     <div className="relative" ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="p-1 hover:bg-gray-200 rounded transition-colors opacity-0 group-hover:opacity-100"
+        className="p-1 hover:bg-gray-200 rounded transition-colors opacity-60 hover:opacity-100"
       >
         <MoreHorizontal className="w-4 h-4 text-gray-500" />
       </button>
