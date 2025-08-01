@@ -30,7 +30,8 @@ export async function POST(request: NextRequest) {
       const files: File[] = []
       
       // 提取所有文件
-      for (const [key, value] of formData.entries()) {
+      const entries = Array.from(formData.entries())
+      for (const [key, value] of entries) {
         if (key.startsWith('file') && value instanceof File) {
           files.push(value)
         }
