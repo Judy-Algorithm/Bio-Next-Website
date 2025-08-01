@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { FolderOpen, MessageSquare, Clock, X, Hash } from 'lucide-react'
+import { FolderOpen, Clock, X, Hash } from 'lucide-react'
 import ProjectMenu from './ProjectMenu'
 
 interface Project {
@@ -144,12 +144,8 @@ export default function ProjectList({
                     {project.lastMessage}
                   </p>
                 )}
-                <div className="flex items-center justify-between mt-1">
-                  <div className="flex items-center space-x-2">
-                    <MessageSquare className="w-3 h-3 text-gray-400" />
-                    <span className="text-xs text-gray-400">{project.messageCount} messages</span>
-                  </div>
-                  {!isRenaming && (
+                {!isRenaming && (
+                  <div className="flex justify-end mt-1">
                     <ProjectMenu
                       projectId={project.id}
                       projectName={project.name}
@@ -157,8 +153,8 @@ export default function ProjectList({
                       onDelete={onDeleteProject}
                       onRenameStart={() => handleRenameStart(project.id, project.name)}
                     />
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>
