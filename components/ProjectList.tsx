@@ -91,7 +91,15 @@ export default function ProjectList({
                 ? 'bg-purple-100 text-purple-800'
                 : 'hover:bg-gray-100 text-gray-700'
             }`}
-            onClick={() => !isRenaming && onSelectProject(project.id)}
+            onClick={(e) => {
+              // 如果点击的是菜单按钮或其子元素，不触发项目选择
+              if ((e.target as Element).closest('[data-menu-button]')) {
+                return
+              }
+              if (!isRenaming) {
+                onSelectProject(project.id)
+              }
+            }}
           >
             <div className="flex items-center space-x-3">
               <FolderOpen className={`w-4 h-4 flex-shrink-0 ${

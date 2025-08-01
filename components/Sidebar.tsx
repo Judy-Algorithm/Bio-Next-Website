@@ -158,7 +158,7 @@ export default function Sidebar({ projects = [] }: SidebarProps) {
         </div>
 
         {/* Projects list */}
-        <div className="flex-1 px-2 md:px-4 overflow-y-auto">
+        <div className="flex-1 px-2 md:px-4 overflow-y-auto relative">
           <ProjectList
             projects={localProjects}
             activeProjectId={activeProjectId}

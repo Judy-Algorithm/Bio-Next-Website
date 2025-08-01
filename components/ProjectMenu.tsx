@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { MoreHorizontal, Edit, Trash2, X } from 'lucide-react'
 
 interface ProjectMenuProps {
@@ -49,27 +48,6 @@ export default function ProjectMenu({
       onRenameStart()
     }
     setIsOpen(false)
-    setTimeout(() => {
-      inputRef.current?.focus()
-      inputRef.current?.select()
-    }, 100)
-  }
-
-  const handleRenameSubmit = () => {
-    if (newName.trim() && newName.trim() !== projectName) {
-      onRename(projectId, newName.trim())
-    }
-    if (onRenameCancel) {
-      onRenameCancel()
-    }
-    setNewName(projectName)
-  }
-
-  const handleRenameCancel = () => {
-    if (onRenameCancel) {
-      onRenameCancel()
-    }
-    setNewName(projectName)
   }
 
   const handleDelete = () => {
@@ -90,16 +68,34 @@ export default function ProjectMenu({
           onChange={(e) => setNewName(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              handleRenameSubmit()
+              if (newName.trim() && newName.trim() !== projectName) {
+                onRename(projectId, newName.trim())
+              }
+              if (onRenameCancel) {
+                onRenameCancel()
+              }
             } else if (e.key === 'Escape') {
-              handleRenameCancel()
+              if (onRenameCancel) {
+                onRenameCancel()
+              }
             }
           }}
-          onBlur={handleRenameSubmit}
+          onBlur={() => {
+            if (newName.trim() && newName.trim() !== projectName) {
+              onRename(projectId, newName.trim())
+            }
+            if (onRenameCancel) {
+              onRenameCancel()
+            }
+          }}
           className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
         />
         <button
-          onClick={handleRenameCancel}
+          onClick={() => {
+            if (onRenameCancel) {
+              onRenameCancel()
+            }
+          }}
           className="p-1 hover:bg-gray-200 rounded transition-colors"
           title="Cancel rename"
         >
@@ -112,7 +108,10 @@ export default function ProjectMenu({
   return (
     <div className="relative" ref={menuRef}>
       <button
-        onClick={() => {
+        data-menu-button
+        onClick={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
           console.log('Menu button clicked, current isOpen:', isOpen)
           setIsOpen(!isOpen)
         }}
@@ -121,34 +120,43 @@ export default function ProjectMenu({
         <MoreHorizontal className="w-4 h-4 text-gray-500" />
       </button>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: -10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: -10 }}
-            className="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-[9999] min-w-32"
-            style={{ zIndex: 9999 }}
-          >
-            <div className="py-1">
-              <button
-                onClick={handleRename}
-                className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-              >
-                <Edit className="w-4 h-4" />
-                <span>Rename Project</span>
-              </button>
-              <button
-                onClick={handleDelete}
-                className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
-              >
-                <Trash2 className="w-4 h-4" />
-                <span>Delete Project</span>
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* 菜单内容 */}
+      {isOpen && (
+        <div 
+          className="fixed bg-white border border-gray-200 rounded-lg shadow-lg z-[99999] min-w-32"
+          style={{ 
+            zIndex: 99999,
+            top: menuRef.current?.getBoundingClientRect().bottom! + 4,
+            right: window.innerWidth - (menuRef.current?.getBoundingClientRect().right! || 0)
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="py-1">
+            <button
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                handleRename()
+              }}
+              className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+            >
+              <Edit className="w-4 h-4" />
+              <span>Rename Project</span>
+            </button>
+            <button
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                handleDelete()
+              }}
+              className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+            >
+              <Trash2 className="w-4 h-4" />
+              <span>Delete Project</span>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 } 
