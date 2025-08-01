@@ -62,8 +62,8 @@ export default function MessageItem({ message }: MessageItemProps) {
           
           {/* Message Content */}
           <div className="ml-11">
-            <div className="prose prose-sm max-w-none text-gray-800">
-              <div className="prose prose-sm max-w-none">
+            <div className="text-gray-800">
+              <div className="prose prose-sm max-w-none text-base leading-relaxed break-words">
                 <ReactMarkdown 
                   remarkPlugins={[remarkGfm]}
                 >
