@@ -4,12 +4,14 @@ export interface BioAnalysisResponse {
   content: string
   needsDataUpload?: boolean
   analysisType?: string
+  reasoning?: string // 内部使用，用于调试和模型决策优化，不暴露给用户
 }
 
 // 检测用户是否需要数据分析
 export async function detectAnalysisNeed(message: string): Promise<{
   needsAnalysis: boolean
   analysisType?: string
+  reasoning?: string
 }> {
   try {
     const response = await fetch('/api/bio-llm', {
@@ -75,7 +77,8 @@ export async function callBioLLM({
     return {
       content: result.content,
       needsDataUpload: analysisDetection.needsAnalysis,
-      analysisType: analysisDetection.analysisType
+      analysisType: analysisDetection.analysisType,
+      reasoning: analysisDetection.reasoning
     }
   } catch (error) {
     console.error('Error calling Bio LLM:', error)

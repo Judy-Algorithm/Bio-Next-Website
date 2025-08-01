@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { User, Bot, Copy, ThumbsUp, ThumbsDown, MoreHorizontal } from 'lucide-react'
 import { useAuthStore } from '@/store/auth'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 interface Message {
   id: string
@@ -60,8 +62,14 @@ export default function MessageItem({ message }: MessageItemProps) {
           
           {/* Message Content */}
           <div className="ml-11">
-            <div className="whitespace-pre-wrap break-words leading-relaxed text-gray-800">
-              {message.content}
+            <div className="prose prose-sm max-w-none text-gray-800">
+              <div className="prose prose-sm max-w-none">
+                <ReactMarkdown 
+                  remarkPlugins={[remarkGfm]}
+                >
+                  {message.content}
+                </ReactMarkdown>
+              </div>
             </div>
             
             {/* Timestamp */}
