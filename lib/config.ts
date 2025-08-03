@@ -59,6 +59,11 @@ export const config = {
     analysisStarted: '分析已开始',
     downloadSuccess: '文件下载成功',
   },
+
+  // CureNova配置
+  cureNova: {
+    loginUrl: process.env.NEXT_PUBLIC_CURENOVA_LOGIN_URL || 'https://curenova.com/login',
+  },
 }
 
 // 验证配置

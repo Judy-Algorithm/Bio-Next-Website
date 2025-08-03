@@ -106,6 +106,20 @@ export function generateProjectId(): string {
 }
 
 /**
+ * 生成会话ID
+ */
+export function generateSessionId(): string {
+  return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
+}
+
+/**
+ * 生成短会话ID
+ */
+export function generateShortSessionId(): string {
+  return Math.random().toString(36).substr(2, 6)
+}
+
+/**
  * 防抖函数
  */
 export function debounce<T extends (...args: any[]) => any>(
@@ -332,6 +346,17 @@ export const keyboard = {
     return keys.join('+')
   }
 } 
+
+/**
+ * 重定向到CureNova登录
+ */
+export function redirectToCureNovaLogin(): void {
+  if (typeof window === 'undefined') return
+  
+  const currentUrl = encodeURIComponent(window.location.href)
+  const loginUrl = `${config.cureNova.loginUrl}?redirect=${currentUrl}`
+  window.location.href = loginUrl
+}
 
 /**
  * Cross-site authentication utilities
