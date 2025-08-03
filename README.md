@@ -36,15 +36,71 @@ This application integrates with [CureNova Bioscience](https://cure-nova-website
 
 ## Setup
 
-### 1. Install Dependencies
+### 1. 快速设置（推荐）
+
+使用自动设置脚本：
+
+```bash
+# 给脚本执行权限
+chmod +x scripts/setup-frontend.sh
+
+# 运行设置脚本
+./scripts/setup-frontend.sh
+```
+
+### 2. 手动设置
+
+#### 安装依赖
 
 ```bash
 npm install
 ```
 
-### 2. API Configuration
+#### 配置环境变量
 
-The application is configured to use a custom API endpoint. The configuration is already set in `app/api/bio-llm/route.ts`:
+创建 `.env.local` 文件：
+
+```bash
+# Bio-Next 前端环境变量配置
+# 服务器API地址
+NEXT_PUBLIC_SERVER_URL=http://47.79.1.102:8000
+
+# 开发环境配置
+NODE_ENV=development
+
+# 应用配置
+NEXT_PUBLIC_APP_NAME=Bio-Next
+NEXT_PUBLIC_APP_VERSION=1.0.0
+
+# API超时设置（毫秒）
+NEXT_PUBLIC_API_TIMEOUT=30000
+
+# 文件上传大小限制（字节）
+NEXT_PUBLIC_MAX_FILE_SIZE=104857600
+
+# 允许的文件类型 (支持所有文件类型)
+NEXT_PUBLIC_ALLOWED_FILE_TYPES=*
+```
+
+#### 启动开发服务器
+
+```bash
+npm run dev
+```
+
+打开 [http://localhost:3000](http://localhost:3000) 在浏览器中查看。
+
+### 3. 验证配置
+
+检查服务器连接：
+
+```bash
+curl http://localhost:3000/api/health
+```
+
+### 4. API配置
+
+应用已配置使用自定义API端点。配置在 `app/api/bio-llm/route.ts` 中：
 
 ```typescript
 const CONFIG = {
@@ -53,14 +109,6 @@ const CONFIG = {
   model: "o3-mini-2025-01-31"
 }
 ```
-
-### 3. Run Development Server
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Code Optimization
 
@@ -108,10 +156,14 @@ The codebase has been optimized to eliminate redundancy:
 
 ### Supported File Formats:
 
+- **All file types**: The system now supports uploading any type of file
 - **Sequence files**: FASTQ, FASTA, BAM, SAM, VCF
-- **Expression data**: CSV, TSV, Excel files
+- **Expression data**: CSV, TSV, Excel files, JSON, XML
 - **Annotation files**: GFF, GTF, BED
-- **Other formats**: JSON, XML, TXT
+- **Image files**: PNG, JPG, JPEG, GIF, SVG
+- **Document files**: PDF, DOC, DOCX, PPT, PPTX
+- **Compressed files**: ZIP, TAR, GZ, RAR
+- **Other formats**: Any other file format can be uploaded
 
 ## Usage
 
@@ -147,6 +199,34 @@ The codebase has been optimized to eliminate redundancy:
 │   └── useAuth.ts        # Unified authentication hook
 ├── store/                 # State management
 └── types/                 # TypeScript type definitions
+```
+
+## 服务器连接
+
+### 后端服务器信息
+
+- **服务器地址**: 47.79.1.102
+- **端口**: 8000
+- **API基础URL**: http://47.79.1.102:8000
+- **服务器密码**: 520Zhutingyu
+
+### API端点
+
+- **健康检查**: `GET /`
+- **上传数据**: `POST /api/upload-data`
+- **开始分析**: `POST /api/start-analysis`
+- **分析状态**: `GET /api/analysis-status/{project_id}`
+- **用户项目**: `GET /api/projects/{user_id}`
+- **下载结果**: `GET /api/download-result/{project_id}`
+
+### 连接验证
+
+```bash
+# 检查服务器健康状态
+curl http://47.79.1.102:8000/
+
+# 查看API文档
+curl http://47.79.1.102:8000/docs
 ```
 
 ## Technologies Used

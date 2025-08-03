@@ -1,83 +1,112 @@
-import { type ClassValue, clsx } from 'clsx'
+import { config } from './config'
 
 /**
  * Merge CSS class names
  */
-export function cn(...inputs: ClassValue[]) {
-  return clsx(inputs)
+export function cn(...inputs: string[]) {
+  return inputs.join(' ')
 }
 
 /**
- * Format time
+ * 文件验证函数
  */
-export function formatTime(date: Date): string {
-  return date.toLocaleTimeString('en-US', {
-    hour: '2-digit',
-    minute: '2-digit'
-  })
+export function validateFile(file: File): { isValid: boolean; error?: string } {
+  // 检查文件大小
+  if (file.size > config.upload.maxFileSize) {
+    return {
+      isValid: false,
+      error: `文件大小超过限制 (${formatFileSize(config.upload.maxFileSize)})`
+    }
+  }
+
+  // 检查文件类型 - 允许所有文件类型
+  const fileExtension = getFileExtension(file.name)
+  if (config.upload.allowedTypes.includes('*')) {
+    // 允许所有文件类型
+    return { isValid: true }
+  } else if (!config.upload.allowedTypes.includes(fileExtension.toLowerCase())) {
+    return {
+      isValid: false,
+      error: `不支持的文件类型: ${fileExtension}。支持的类型: ${config.upload.allowedTypes.join(', ')}`
+    }
+  }
+
+  return { isValid: true }
 }
 
 /**
- * Format date
+ * 获取文件扩展名
  */
-export function formatDate(date: Date): string {
-  return date.toLocaleDateString('en-US', {
+export function getFileExtension(filename: string): string {
+  const lastDotIndex = filename.lastIndexOf('.')
+  return lastDotIndex !== -1 ? filename.substring(lastDotIndex) : ''
+}
+
+/**
+ * 格式化文件大小
+ */
+export function formatFileSize(bytes: number): string {
+  if (bytes === 0) return '0 Bytes'
+  
+  const k = 1024
+  const sizes = ['Bytes', 'KB', 'MB', 'GB']
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+  
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+}
+
+/**
+ * 格式化时间
+ */
+export function formatDateTime(date: string | Date): string {
+  const d = new Date(date)
+  return d.toLocaleString('zh-CN', {
     year: 'numeric',
-    month: 'long',
-    day: 'numeric'
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
   })
 }
 
 /**
- * Format relative time
+ * 格式化相对时间
  */
-export function formatRelativeTime(date: Date): string {
+export function formatRelativeTime(date: string | Date): string {
   const now = new Date()
-  const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000)
+  const target = new Date(date)
+  const diffInSeconds = Math.floor((now.getTime() - target.getTime()) / 1000)
 
   if (diffInSeconds < 60) {
-    return 'just now'
+    return '刚刚'
   } else if (diffInSeconds < 3600) {
-    return `${Math.floor(diffInSeconds / 60)} minutes ago`
+    return `${Math.floor(diffInSeconds / 60)}分钟前`
   } else if (diffInSeconds < 86400) {
-    return `${Math.floor(diffInSeconds / 3600)} hours ago`
+    return `${Math.floor(diffInSeconds / 3600)}小时前`
   } else if (diffInSeconds < 2592000) {
-    return `${Math.floor(diffInSeconds / 86400)} days ago`
+    return `${Math.floor(diffInSeconds / 86400)}天前`
   } else {
-    return formatDate(date)
+    return formatDateTime(target)
   }
 }
 
 /**
- * Generate random ID
+ * 生成用户ID
  */
-export function generateId(): string {
-  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+export function generateUserId(): string {
+  return 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
 }
 
 /**
- * Generate session ID
+ * 生成项目ID
  */
-export function generateSessionId(): string {
-  return Math.random().toString(36).substring(2, 15)
+export function generateProjectId(): string {
+  return 'project_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
 }
 
 /**
- * Generate short session ID
- */
-export function generateShortSessionId(): string {
-  return Math.random().toString(36).substring(2, 8)
-}
-
-/**
- * Redirect to CureNova login
- */
-export function redirectToCureNovaLogin(): void {
-  window.open('https://cure-nova-website.vercel.app/login', '_blank')
-}
-
-/**
- * Debounce function
+ * 防抖函数
  */
 export function debounce<T extends (...args: any[]) => any>(
   func: T,
@@ -91,7 +120,7 @@ export function debounce<T extends (...args: any[]) => any>(
 }
 
 /**
- * Throttle function
+ * 节流函数
  */
 export function throttle<T extends (...args: any[]) => any>(
   func: T,
@@ -102,51 +131,99 @@ export function throttle<T extends (...args: any[]) => any>(
     if (!inThrottle) {
       func(...args)
       inThrottle = true
-      setTimeout(() => (inThrottle = false), limit)
+      setTimeout(() => inThrottle = false, limit)
     }
   }
 }
 
 /**
- * Copy text to clipboard
+ * 错误处理函数
  */
-export async function copyToClipboard(text: string): Promise<boolean> {
+export function handleError(error: any, context: string = ''): string {
+  console.error(`错误 [${context}]:`, error)
+  
+  if (error.name === 'AbortError') {
+    return config.errorMessages.timeoutError
+  }
+  
+  if (error.message) {
+    return error.message
+  }
+  
+  return config.errorMessages.serverError
+}
+
+/**
+ * 成功消息处理
+ */
+export function getSuccessMessage(action: string): string {
+  switch (action) {
+    case 'upload':
+      return config.successMessages.uploadSuccess
+    case 'analysis':
+      return config.successMessages.analysisStarted
+    case 'download':
+      return config.successMessages.downloadSuccess
+    default:
+      return '操作成功'
+  }
+}
+
+/**
+ * 检查网络连接
+ */
+export async function checkNetworkConnection(): Promise<boolean> {
   try {
-    await navigator.clipboard.writeText(text)
-    return true
-  } catch (err) {
-    console.error('Copy failed:', err)
+    const response = await fetch('/api/health', { 
+      method: 'HEAD',
+      cache: 'no-cache'
+    })
+    return response.ok
+  } catch {
     return false
   }
 }
 
 /**
- * Download file
+ * 下载文件
  */
-export function downloadFile(url: string, filename: string): void {
-  const link = document.createElement('a')
-  link.href = url
-  link.download = filename
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
+export function downloadFile(blob: Blob, filename: string): void {
+  const url = window.URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename
+  document.body.appendChild(a)
+  a.click()
+  window.URL.revokeObjectURL(url)
+  document.body.removeChild(a)
 }
 
 /**
- * Format file size
+ * 复制到剪贴板
  */
-export function formatFileSize(bytes: number): string {
-  if (bytes === 0) return '0 Bytes'
-  
-  const k = 1024
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB']
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
-  
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+export async function copyToClipboard(text: string): Promise<boolean> {
+  try {
+    await navigator.clipboard.writeText(text)
+    return true
+  } catch (error) {
+    console.error('复制失败:', error)
+    return false
+  }
 }
 
 /**
- * Validate email format
+ * 生成随机颜色
+ */
+export function generateRandomColor(): string {
+  const colors = [
+    '#3B82F6', '#EF4444', '#10B981', '#F59E0B', '#8B5CF6',
+    '#06B6D4', '#84CC16', '#F97316', '#EC4899', '#6366F1'
+  ]
+  return colors[Math.floor(Math.random() * colors.length)]
+}
+
+/**
+ * 验证邮箱格式
  */
 export function isValidEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -154,7 +231,7 @@ export function isValidEmail(email: string): boolean {
 }
 
 /**
- * Validate URL format
+ * 验证URL格式
  */
 export function isValidUrl(url: string): boolean {
   try {

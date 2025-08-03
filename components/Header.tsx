@@ -3,8 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { 
-} from 'lucide-react'
+import { Download } from 'lucide-react'
 import { useAuthStore } from '@/store/auth'
 import { useChatStore } from '@/store/chat'
 import UserProfile from './UserProfile'
@@ -45,6 +44,12 @@ export default function Header({ onToggleSidebar }: HeaderProps = {}) {
 
       {/* Right side - User actions */}
       <div className="flex items-center space-x-2 md:space-x-4">
+        {/* Download icon */}
+        {isAuthenticated && user && (
+          <button className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+            <Download className="w-4 h-4" />
+          </button>
+        )}
         {/* User profile - show on all devices */}
         {isAuthenticated && user && (
           <div className="block">

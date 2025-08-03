@@ -7,7 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "test:connection": "node scripts/test-connection.js",
+    "test:upload": "node scripts/test-file-upload.js",
+    "setup": "chmod +x scripts/setup-frontend.sh && ./scripts/setup-frontend.sh",
+    "health": "curl -s http://localhost:3000/api/health | jq . || echo '健康检查失败'",
+    "fix-node": "./fix-node.sh",
+    "check-node": "node --version && echo 'Node.js版本检查完成'"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.6",
